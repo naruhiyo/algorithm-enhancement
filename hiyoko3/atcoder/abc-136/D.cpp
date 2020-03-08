@@ -12,35 +12,55 @@ int main() {
 	cin >> S;
 	vector<int> result(S.length(), 0);
 
+	int pos = 0, right_count, left_count;
 	repeat(i, S.length()) {
-		int pos = 1;
 		string a = S.substr(i, 1);
-		if (a == "L") continue;
-
-		for(int j = i+1; j < S.length(); j++) {
-			string b = S.substr(j, 1);
-			if (b == "L") break;
-			pos++;
-		}
-		// cout << "pos: " << pos << ", result idx: " << ((pos % 2) == 0 ? i+pos : i+pos-1) << endl;
-		if ((pos % 2) == 0) result[i+pos] += 1;
-		else result[i+pos-1] += 1;
-	}
-
-
-	for(int i = S.length() - 1; i >= 0; i--) {
-		int pos = 1;
-		string a = S.substr(i, 1);
+		pos++;
 		if (a == "R") continue;
 
-		for(int j = i-1; j >= 0; j--) {
-			string b = S.substr(j, 1);
-			if (b == "R") break;
-			pos++;
-		}
-		// cout << "pos: " << pos << ", result idx: " << ((pos % 2) == 0 ? i-pos : i-pos-1) << endl;
-		if ((pos % 2) == 0) result[i-pos] += 1;
-		else result[i-pos+1] += 1;
+		pos -= 1; // `L`
+		if (pos < 1) continue;
+
+		// count RL of RRRRL
+		result[i-1] += 1; // R
+		pos -= 1; // `R`
+		if (pos < 1) continue;
+
+		// count other strings
+		right_count = pos / 2;
+		left_count = pos - right_count;
+
+		result[i] += left_count;
+		result[i-1] += right_count;
+
+		pos = 0;
+	}
+
+	pos = 0;
+
+	for(int i = S.length() - 1; i >= 0; i--) {
+		string a = S.substr(i, 1);
+		pos++;
+		if (a == "L") continue;
+
+		pos -= 1;	// `R`
+		if (pos < 1) continue;
+
+		// count RL of RLLLL
+		result[i+1] += 1; // L
+		pos -= 1;// L
+		if (pos < 1) continue;
+
+		if (pos < 1) continue;
+
+		// count other strings
+		left_count = pos / 2;
+		right_count = pos - left_count;
+
+		result[i] += right_count;
+		result[i+1] += left_count;
+
+		pos = 0;
 	}
 
 	repeat(i, S.length()) {
