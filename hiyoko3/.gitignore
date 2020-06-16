@@ -1,0 +1,16 @@
+# abc
+at-coder/abc/*/*
+!at-coder/abc/*/*.cpp
+!at-coder/abc/*/*.py
+# arc
+at-coder/arc/*/*
+!at-coder/arc/*/*.cpp
+!at-coder/arc/*/*.py
+# agc
+at-coder/agc/*/*
+!at-coder/agc/*/*.cpp
+!at-coder/agc/*/*.py
+# other event
+at-coder/*20*/*
+!at-coder/*20*/*.cpp
+!at-coder/*20*/*.py
